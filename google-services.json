@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "261337854136",
+    "project_id": "shoppinglist-1ad35",
+    "storage_bucket": "shoppinglist-1ad35.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261337854136:android:ea25243dfde6ce53b1844d",
+        "android_client_info": {
+          "package_name": "com.dacosta.shoppinglist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzPP4CotwcwStED9UkpxkYsVn9CSFv4Lg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

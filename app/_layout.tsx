@@ -1,39 +1,64 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { Stack, useRouter, useSegments } from "expo-router";
+import { useEffect, useState } from "react";  
+import { auth } from "./config/firebaseConfig";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { ActivityIndicator, View } from "react-native";
+import { Header } from "react-native/Libraries/NewAppScreen";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<User | null>();
 
+  // use router for expo to navigate to the home page if we have a user logged in.
+  const router = useRouter();
+  const segments = useSegments();
+
+  // check that the auth on state is working. this should be null when we start the app. since we are in the initializing state.
+  const onAuthStateChanged = (user: User | null) => {
+    console.log('onAuthStateChanged', user);
+    setUser(user);
+    if (initializing) 
+      setInitializing(false);
+  };
+
+  // this is used to check the auth state of the user.
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    const subscriber = auth.onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
 
-  if (!loaded) {
-    return null;
-  }
+  // use to check the state of the user and rout the user to the correct page. depending on the state of the user logged in or not
+  useEffect(() => {
+    if (initializing) return;
+
+    const inTabsGroup = segments[0] === '(tabs)';
+
+    if (user) {
+      if (user && !inTabsGroup) {
+        router.replace('/(tabs)/home');
+      } else if (!user && inTabsGroup) {
+        router.replace('/');
+      }
+    }
+  }, [user, initializing]);
+  
+  // if the initializing state is true then we return a loading symbol on screen.
+  if (initializing)
+    return(
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+      }}>
+      <ActivityIndicator size="large" />    
+    </View>
+  );
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack>
+      <Stack.Screen name="index" options={{headerTitle: "Shopping List"}}/>
+      <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
+    </Stack>
   );
 }
