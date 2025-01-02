@@ -1,59 +1,65 @@
-import { 
-  Text, 
-  View, 
-  StyleSheet, 
-  KeyboardAvoidingView, 
-  TextInput,  
-  ActivityIndicator, 
-  TouchableOpacity
+import {
+  Text,
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  TextInput,
+  ActivityIndicator,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Pressable,
 } from "react-native";
 
-import {auth} from './config/firebaseConfig';
-import {FirebaseError} from 'firebase/app';
+import { auth } from "./config/firebaseConfig";
+import { FirebaseError } from "firebase/app";
 
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 export default function Index() {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  
 
-// function that handles the sign up process
+  // function that handles the sign up process
   const singUp = async () => {
-   setLoading(true);
-   try {
-     await createUserWithEmailAndPassword(auth, email, password);
-     alert('Check your email');
-  } catch (e: any) {
-    const err = e as FirebaseError;
-    alert("Registration failed: " + err.message);
-  } finally {
-    setLoading(false);
-  }
+    setLoading(true);
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert("Check your email");
+    } catch (e: any) {
+      const err = e as FirebaseError;
+      alert("Registration failed: " + err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-
-// function that handles the sign in process
+  // function that handles the sign in process
   const singIn = async () => {
-      setLoading(true);
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch ( e: any) {
-        const err = e as FirebaseError;
-        alert('Login failed: ' + err.message);
-      }finally {
-        setLoading(false);
-      }
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (e: any) {
+      const err = e as FirebaseError;
+      alert("Login failed: " + err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // this contains the view of the hole index page. that uses the styles variable that is a stylesheet
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View>
+          <Text style={styles.headerText}>Sign in:</Text>
+        </View>
+        <View>
           <TextInput
             style={styles.input}
             value={email}
@@ -71,21 +77,25 @@ export default function Index() {
             placeholder="Password"
             placeholderTextColor={"#888"}
           />
-            {loading ? (
-            <ActivityIndicator size={'small'} style={{margin: 28}} />
+          {loading ? (
+            <ActivityIndicator size={"small"} style={{ margin: 28 }} />
           ) : (
             <>
               <TouchableOpacity style={styles.button} onPress={singIn}>
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, styles.buttonOutline]} onPress={singUp}>
+
+              <TouchableOpacity
+                style={[styles.button, styles.buttonOutline]}
+                onPress={singUp}
+              >
                 <Text style={styles.buttonOutlineText}>Create user</Text>
               </TouchableOpacity>
-
             </>
           )}
-      </View>
-    </KeyboardAvoidingView>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   input: {
     marginVertical: 4,
@@ -102,7 +112,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   /* buttonContainer: { 
     width: '60%', 
@@ -111,29 +121,35 @@ const styles = StyleSheet.create({
     margin: 40,
   }, */
   button: {
-    backgroundColor: '#0782F9',
-    width: '80%',
+    backgroundColor: "#0782F9",
+    width: "80%",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
     marginLeft: 30,
   },
   buttonOutline: {
-    backgroundColor: 'white',
-    borderColor: '#0782F9',
+    backgroundColor: "white",
+    borderColor: "#0782F9",
     marginTop: 10,
     borderWidth: 2,
   },
   buttonText: {
-    color: '#white',
+    color: "#white",
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color: "#0782F9",
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
   },
-
+  headerText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "left",
+    marginBottom: 20,
+    color: "#0782F9",
+  },
 });
