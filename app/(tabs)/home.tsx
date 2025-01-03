@@ -146,7 +146,7 @@ const HomePage = ({navigation}: RouterPros) => {
 
   return (
   <GestureHandlerRootView>
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
