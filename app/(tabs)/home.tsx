@@ -8,20 +8,20 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  Button,
-  Pressable,
 } from "react-native";
+
 import React, { useEffect, useRef, useState } from "react";
-import Items from "../../components/Items";
 import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, Timestamp, updateDoc } from "firebase/firestore";
 import { FIRESTORE_db } from "../config/firebaseConfig";
 import { auth } from "../config/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FlatList } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+
 import { NavigationProp } from "@react-navigation/native";
 import { signOut } from 'firebase/auth';
 
@@ -77,7 +77,6 @@ const HomePage = ({navigation}: RouterPros) => {
     unsubscribeRef.current = subscriber;
 
     return () => {
-      /* console.log("unsubscribing from firestore listener"); */
       subscriber();
     }; 
    
@@ -159,7 +158,7 @@ const HomePage = ({navigation}: RouterPros) => {
           <View style={styles.header}>
             <Text style={styles.sectionTitle}>Item's to collect:</Text>
             <TouchableOpacity onPress={signOutUser}>
-              <Ionicons style={styles.logoutIcon} name="log-out" size={30} color="black" />
+              <Entypo name="log-out" size={35} color="black"/>
             </TouchableOpacity>
           </View>
 
@@ -211,16 +210,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 15,  // This will place items at both ends
+    paddingBottom: 15,  
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: "bold",
   },
   writeTaskWrapper: {
-    /* position: "absolute",
-    bottom: 60,
-    width: "100%", */
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -270,7 +266,6 @@ const styles = StyleSheet.create({
   },
   flatListContentContainer: {
     paddingBottom: 20,
-    /* paddingRight: 10, */
   },
 
   logoutIcon: {

@@ -4,16 +4,17 @@ import { getFirestore } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import { Platform } from "react-native";
 
+
 // need to use firebase config since im not using react-native-modeling. i haven ejected the expo app. 
 // so this is a simple way to use firebase.
 // when creating a web-app in firebase you will get a config object that looks like this.
 const firebaseConfig = {
-    apiKey: 'AIzaSyAzPP4CotwcwStED9UkpxkYsVn9CSFv4Lg',
-    authDomain: 'shoppinglist-1ad35.firebaseapp.com',
-    projectId: 'shoppinglist-1ad35',
-    storageBucket: 'shoppinglist-1ad35.firebasestorage.app',
-    messagingSenderId: '261337854136',
-    appId: '1:261337854136:ios:90d28607ad5ac0ccb1844d' // You need to fill this from the Firebase console.
+    apiKey: process.env.EXPO_PUBLIC_API_KEY,
+    authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
+    projectId: process.env.EXPO_PUBLIC_PROJECT_ID,
+    storageBucket: process.env.EXPO_PUBLIC_STORAGE_BUCKET,
+    messagingSenderId: process.env.EXPO_PUBLIC_MESSAGING_SENDER_ID,
+    appId: process.env.EXPO_PUBLIC_APP_ID // You need to fill this from the Firebase console.
     
 };
 

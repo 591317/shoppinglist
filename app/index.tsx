@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  Pressable,
+  Image,
 } from "react-native";
 
 import { auth } from "./config/firebaseConfig";
@@ -19,6 +19,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
+const reactLogo = require('../assets/images/groceries.png');
 
 export default function Index() {
   const [email, setEmail] = useState("");
@@ -56,8 +58,9 @@ export default function Index() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <View>
+        <View style={styles.headerSigninContainer}>
           <Text style={styles.headerText}>Sign in:</Text>
+          <Image source={reactLogo} style={styles.logo} />
         </View>
         <View>
           <TextInput
@@ -114,12 +117,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#fff",
   },
-  /* buttonContainer: { 
-    width: '60%', 
-    justifyContent: 'center', 
-    alignItems: 'center',
-    margin: 40,
-  }, */
   button: {
     backgroundColor: "#0782F9",
     width: "80%",
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 10,
-    marginLeft: 30,
+    marginLeft: 45,
   },
   buttonOutline: {
     backgroundColor: "white",
@@ -149,7 +146,25 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "left",
-    marginBottom: 20,
+    marginBottom: 0,
     color: "#0782F9",
+  },
+  headerSigninContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+    marginLeft: 50,
+    marginTop: -65,  
+
+  },
+  formContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
 });

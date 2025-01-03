@@ -70,7 +70,7 @@ export default function RootLayout() {
 
   return (
     <Stack>
-      <Stack.Screen name="index" options={{headerTitle: "Shopping List"}}/>
+      <Stack.Screen name="index" options={{headerTitle: "Shopping List", headerTitleAlign: 'center'}}/>
       <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
     </Stack>
   );
