@@ -79,6 +79,7 @@ export default function Index() {
             secureTextEntry
             placeholder="Password"
             placeholderTextColor={"#888"}
+            
           />
           {loading ? (
             <ActivityIndicator size={"small"} style={{ margin: 28 }} />
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#fff",
     pointerEvents: "auto",
+    fontSize: 16,
     
   },
   button: {

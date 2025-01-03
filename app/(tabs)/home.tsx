@@ -106,6 +106,9 @@ const HomePage = ({navigation}: RouterPros) => {
         return;
     }
     try {
+      if (!item) {
+        return;
+      }
       console.log("add item");
       // the code that adds a collection to the Firestore database and each user has their own collection with their own items
      const doc = await addDoc(collection(FIRESTORE_db, `users/${user.uid}/items`), { title: item, done: false, timestamp: Timestamp.now() });
@@ -231,6 +234,7 @@ const styles = StyleSheet.create({
     borderColor: "#C0C0C0",
     borderWidth: 1,
     width: 250,
+    fontSize: 16,
   },
   addWrapper: {
     width: 60,
