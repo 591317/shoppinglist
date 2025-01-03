@@ -32,10 +32,10 @@ export default function Index() {
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      alert("Check your email");
+      alert("Registration completed");
     } catch (e: any) {
       const err = e as FirebaseError;
-      alert("Registration failed: " + err.message);
+      alert("Registration failed: Please fill in Email and Password fields");
     } finally {
       setLoading(false);
     }
@@ -48,7 +48,7 @@ export default function Index() {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (e: any) {
       const err = e as FirebaseError;
-      alert("Login failed: " + err.message);
+      alert("Login failed: Invalid Email or Password");
     } finally {
       setLoading(false);
     }
@@ -93,7 +93,7 @@ export default function Index() {
                 style={[styles.button, styles.buttonOutline, styles.debugGreenBorder]}
                 onPress={singUp}
               >
-                <Text style={styles.buttonOutlineText}>Create user</Text>
+                <Text style={styles.buttonOutlineText}>Register user</Text>
               </TouchableOpacity>
             </>
           )}
