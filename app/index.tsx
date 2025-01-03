@@ -56,7 +56,7 @@ export default function Index() {
 
   // this contains the view of the hole index page. that uses the styles variable that is a stylesheet
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.headerSigninContainer}>
           <Text style={styles.headerText}>Sign in:</Text>
@@ -89,7 +89,7 @@ export default function Index() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[styles.button, styles.buttonOutline]}
+                style={[styles.button, styles.buttonOutline, styles.debugGreenBorder]}
                 onPress={singUp}
               >
                 <Text style={styles.buttonOutlineText}>Create user</Text>
@@ -116,6 +116,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 10,
     backgroundColor: "#fff",
+    pointerEvents: "auto",
+    
   },
   button: {
     backgroundColor: "#0782F9",
@@ -166,5 +168,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+  },
+   // Temporary borders to debug
+   debugRedBorder: {
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  debugGreenBorder: {
+    borderColor: 'green',
+    borderWidth: 1,
   },
 });
