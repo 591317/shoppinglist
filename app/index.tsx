@@ -10,6 +10,7 @@ import {
   Keyboard,
   Image,
   Modal,
+  Dimensions,
 } from "react-native";
 
 import { auth } from "./config/firebaseConfig";
@@ -22,6 +23,7 @@ import {
 } from "firebase/auth";
 
 const reactLogo = require('../assets/images/groceries.png');
+const { width } = Dimensions.get('window');
 
 export default function Index() {
   const [email, setEmail] = useState("");
@@ -254,7 +256,7 @@ const styles = StyleSheet.create({
   },
   buttonModalCancel: {
     backgroundColor: "red",
-    width: "40%",
+    width: (width - 60) / 2,
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -262,7 +264,7 @@ const styles = StyleSheet.create({
     
   },
   buttonModalRegister: {
-    width: "40%",
+    width: (width - 60) / 2,
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
