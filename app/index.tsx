@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  Modal,
 } from "react-native";
 
 import { auth } from "./config/firebaseConfig";
@@ -25,20 +26,32 @@ const reactLogo = require('../assets/images/groceries.png');
 export default function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   // function that handles the sign up process
   const singUp = async () => {
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert("Registration completed");
+      if(password === confirmPassword){
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Registration completed");
+        setModalVisible(!isModalVisible)
+      } else{
+        alert("Password and Confirm password dose not match")
+      }
     } catch (e: any) {
       const err = e as FirebaseError;
-      alert("Registration failed: Please fill in Email and Password fields");
+      alert("Registration failed: Please fill in Email and Passwords fields");
     } finally {
       setLoading(false);
     }
+  };
+
+  // function to handle the toggle state of the modal pop-up. it sets the value of "isModalVisible" to the oppesite of what it was before
+  const toggleRegisterModal = () => {
+    setModalVisible(!isModalVisible)  
   };
 
   // function that handles the sign in process
@@ -62,6 +75,7 @@ export default function Index() {
           <Text style={styles.headerText}>Sign in:</Text>
           <Image source={reactLogo} style={styles.logo} />
         </View>
+
         <View>
           <TextInput
             style={styles.input}
@@ -90,14 +104,72 @@ export default function Index() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[styles.button, styles.buttonOutline, styles.debugGreenBorder]}
-                onPress={singUp}
+                style={[styles.button, styles.buttonOutline]}
+                onPress={toggleRegisterModal}
               >
                 <Text style={styles.buttonOutlineText}>Register user</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
+
+        <Modal
+           animationType="slide"
+           transparent={false}
+           visible={isModalVisible}
+           onRequestClose={() =>{
+            setModalVisible(!isModalVisible)
+           }}
+        >
+          <View style={styles.container}>
+          
+          <Text style={styles.headerTextModal}>Register user:</Text>
+
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="default"
+              autoCapitalize="none"
+              placeholder="Email"
+              placeholderTextColor={"#888"}
+            />
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              placeholder="Password"
+              placeholderTextColor={"#888"}
+            />
+
+            <TextInput
+              style={[styles.input,
+                confirmPassword !== password && confirmPassword !== '' && styles.inputError,
+              ]}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry
+              placeholder="Confirm Password"
+              placeholderTextColor={"#888"}
+            />
+
+            <View style={styles.buttonModalWrapper}>
+              <TouchableOpacity 
+              style={styles.buttonModalCancel} onPress={toggleRegisterModal}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            
+              <TouchableOpacity
+                  style={[styles.buttonModalRegister, styles.buttonOutline]}
+                  onPress={singUp}
+              >
+                <Text style={styles.buttonOutlineText}>Register user</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -171,13 +243,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-   // Temporary borders to debug
-   debugRedBorder: {
-    borderColor: 'red',
-    borderWidth: 1,
+  inputError:{
+    borderColor: "red"
   },
-  debugGreenBorder: {
-    borderColor: 'green',
-    borderWidth: 1,
+  buttonModalWrapper:{
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 10,
+   
+  },
+  buttonModalCancel: {
+    backgroundColor: "red",
+    width: "40%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+    
+  },
+  buttonModalRegister: {
+    width: "40%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+    marginLeft: 45,
+  },
+  headerTextModal: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "left",
+    marginBottom: 20,
+    color: "#0782F9",
   },
 });

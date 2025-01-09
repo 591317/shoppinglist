@@ -183,7 +183,8 @@ const HomePage = ({navigation}: RouterPros) => {
         <View style={styles.writeTaskWrapper}>
           <TextInput style={styles.input} placeholder="Write item text" 
           onChangeText={(text: string) => setItem(text)}
-          value={item}/>
+          value={item}
+          />
 
           {/* add button that will trigger function to add to Firestore */}
           <TouchableOpacity onPress={addItems}>
