@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   },
   buttonModalCancel: {
     backgroundColor: "red",
-    width: "40%",
+    width: "30%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -262,12 +262,12 @@ const styles = StyleSheet.create({
     
   },
   buttonModalRegister: {
-    width: "40%",
+    width: "30%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 10,
-    marginLeft: 45,
+    marginLeft: 25,
   },
   headerTextModal: {
     fontSize: 24,
